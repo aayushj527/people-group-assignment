@@ -21,6 +21,10 @@ android {
         }
     }
 
+    applicationVariants.all {
+        buildConfigField("String", "API_BASE_URL", "\"https://randomuser.me\"")
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -39,9 +43,10 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.5"
     }
     packaging {
         resources {
@@ -70,4 +75,6 @@ dependencies {
 
     implementation(libs.retrofit)
     implementation(libs.androidx.room)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.dagger.hilt)
 }
