@@ -1,5 +1,8 @@
 package com.peoplegroup.assignmentapp
 
+import android.content.Context
+import android.content.IntentFilter
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -11,6 +14,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.peoplegroup.assignmentapp.data.database.PersonDao
 import com.peoplegroup.assignmentapp.ui.main_screen.MainScreen
 import com.peoplegroup.assignmentapp.ui.theme.PeopleGroupAssignmentAppTheme
+import com.peoplegroup.assignmentapp.utilities.CONNECTIVITY_INTENT_ACTION
+import com.peoplegroup.assignmentapp.utilities.networkChangeReceiver
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -22,6 +27,22 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            registerReceiver(
+                networkChangeReceiver,
+                IntentFilter().apply {
+                    addAction(CONNECTIVITY_INTENT_ACTION)
+                },
+                Context.RECEIVER_EXPORTED
+            )
+        } else {
+            registerReceiver(
+                networkChangeReceiver,
+                IntentFilter().apply {
+                    addAction(CONNECTIVITY_INTENT_ACTION)
+                }
+            )
+        }
 
         setContent {
             PeopleGroupAssignmentAppTheme {
@@ -36,5 +57,10 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        unregisterReceiver(networkChangeReceiver)
     }
 }

@@ -1,4 +1,4 @@
-package com.peoplegroup.assignmentapp
+package com.peoplegroup.assignmentapp.utilities
 
 data class Person(
     var gender: String? = null,

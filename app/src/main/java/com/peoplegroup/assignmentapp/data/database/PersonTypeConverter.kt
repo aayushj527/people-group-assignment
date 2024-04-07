@@ -2,7 +2,7 @@ package com.peoplegroup.assignmentapp.data.database
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson
-import com.peoplegroup.assignmentapp.Person
+import com.peoplegroup.assignmentapp.utilities.Person
 
 class PersonTypeConverter {
     private val gson = Gson()
