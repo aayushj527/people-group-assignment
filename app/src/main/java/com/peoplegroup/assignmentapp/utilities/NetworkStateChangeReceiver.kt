@@ -14,12 +14,9 @@ const val CONNECTIVITY_INTENT_ACTION = "android.net.conn.CONNECTIVITY_CHANGE"
 val networkChangeReceiver: BroadcastReceiver = object : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == CONNECTIVITY_INTENT_ACTION) {
-            when (getCurrentConnectivityState()) {
-                ConnectionState.Available -> {
-                    showToast("connected")
-                }
-
-                ConnectionState.Unavailable -> {
+            getCurrentConnectivityState().let {
+                AppClass.connectivityState.value = it
+                if (it == ConnectionState.Unavailable) {
                     showToast(context.getString(R.string.error_network_disconnected))
                 }
             }
@@ -36,6 +33,7 @@ fun getCurrentConnectivityState(): ConnectionState {
 
         val actNetwork = connectivityManager.getNetworkCapabilities(network)
             ?: return ConnectionState.Unavailable
+
         return when {
             actNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
                     actNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> {

@@ -14,7 +14,7 @@ class PersonDomain @Inject constructor(private val personService: PersonService)
     }
 
     suspend fun getAllPersons(results: Int = PERSON_DEFAULT_LIMIT): Response<GetAllPersonResponse>? {
-        return if (getCurrentConnectivityState() == ConnectionState.Available) {
+        return if (AppClass.connectivityState.value == ConnectionState.Available) {
             personService.getAllPersons(results)
         } else {
             showToast(AppClass.getContext().getString(R.string.error_network_disconnected))
