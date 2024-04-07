@@ -1,8 +1,5 @@
-package com.peoplegroup.assignmentapp.data.database
+package com.peoplegroup.assignmentapp
 
-import androidx.room.Entity
-
-@Entity
 data class Person(
     var gender: String? = null,
     var name: Name? = Name(),

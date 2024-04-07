@@ -2,7 +2,10 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.ksp)
+    kotlin("kapt")
 }
+
+apply(plugin = "com.google.dagger.hilt.android")
 
 android {
     namespace = "com.peoplegroup.assignmentapp"
@@ -46,7 +49,7 @@ android {
         buildConfig = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.5"
+        kotlinCompilerExtensionVersion = "1.5.11"
     }
     packaging {
         resources {
@@ -76,5 +79,9 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.androidx.room)
     ksp(libs.androidx.room.compiler)
-    implementation(libs.dagger.hilt)
+    implementation(libs.androidx.hilt.navigation)
+    implementation(libs.androidx.hilt.android)
+    kapt(libs.hilt.android.compiler)
+    implementation(libs.gson)
+    implementation(libs.converter.gson)
 }

@@ -1,23 +1,20 @@
 package com.peoplegroup.assignmentapp
 
 import android.app.Application
-import androidx.room.Room
-import com.peoplegroup.assignmentapp.data.database.DataBase
+import android.content.Context
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
 class AppClass : Application() {
-    companion object {
-        lateinit var database: DataBase
+    init {
+        instance = this
     }
 
-    override fun onCreate() {
-        super.onCreate()
-        database = Room
-            .databaseBuilder(
-                applicationContext,
-                DataBase::class.java,
-                "person_database"
-            ).build()
+    companion object {
+        private var instance: AppClass? = null
+
+        fun getContext(): Context {
+            return instance!!.applicationContext
+        }
     }
 }
