@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 class PersonDomain @Inject constructor(private val personService: PersonService) {
     companion object {
-        const val PERSON_DEFAULT_LIMIT = 10
+        const val PERSON_DEFAULT_LIMIT = 2
     }
 
     suspend fun getAllPersons(results: Int = PERSON_DEFAULT_LIMIT): Response<GetAllPersonResponse>? {
