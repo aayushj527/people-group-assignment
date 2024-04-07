@@ -41,7 +41,7 @@ data class Location(
     var city: String? = null,
     var state: String? = null,
     var country: String? = null,
-    var postcode: Int? = null,
+    var postcode: String? = null,
     var coordinates: Coordinates? = Coordinates(),
     var timezone: Timezone? = Timezone()
 )
