@@ -30,5 +30,37 @@ fun nameBuilder(name: Name): String {
         nameString = nameString.plus(" $it")
     }
 
-    return "${name.title} ${name.first} ${name.last}"
+    return nameString
+}
+
+fun addressBuilder(location: Location): String {
+    var locationString = ""
+
+    location.street?.let {
+        locationString = locationString.plus(streetBuilder(it))
+    }
+
+    location.city?.let {
+        locationString = locationString.plus(" $it")
+    }
+
+    location.state?.let {
+        locationString = locationString.plus(" $it")
+    }
+
+    return locationString
+}
+
+fun streetBuilder(street: Street): String {
+    var streetString = ""
+
+    street.number?.let {
+        streetString = streetString.plus(it)
+    }
+
+    street.name?.let {
+        streetString = streetString.plus(" $it")
+    }
+
+    return streetString
 }

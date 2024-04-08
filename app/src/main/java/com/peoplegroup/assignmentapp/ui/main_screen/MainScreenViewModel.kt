@@ -1,5 +1,8 @@
 package com.peoplegroup.assignmentapp.ui.main_screen
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -22,15 +25,18 @@ class MainScreenViewModel @Inject constructor(
     private val personDomain: PersonDomain,
     private val personDao: PersonDao
 ) : ViewModel() {
-    init {
-        getPersonDataFromServer()
-    }
 
     val persons = personDao.getAllPersons().asLiveData()
     private var dataSyncedFromApi = false
     private var dataSyncingJob: Job? = null
+    var apiCalling by mutableStateOf(false)
+
+    init {
+        getPersonDataFromServer()
+    }
 
     fun getPersonDataFromServer() {
+        apiCalling = true
         dataSyncingJob = viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 personDomain.getAllPersons()
@@ -51,6 +57,10 @@ class MainScreenViewModel @Inject constructor(
                         showToast(AppClass.getContext().getString(R.string.error_occurred))
                     }
                 }
+                apiCalling = false
+            } ?: run {
+                dataSyncingJob?.cancel()
+                apiCalling = false
             }
         }
     }

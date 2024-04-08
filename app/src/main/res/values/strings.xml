@@ -2,4 +2,6 @@
     <string name="app_name">People group assignment app</string>
     <string name="error_network_disconnected">Network disconnected</string>
     <string name="error_occurred">Error occurred</string>
+    <string name="load_more">Load more</string>
+    <string name="profile_matches">Profile Matches</string>
 </resources>
