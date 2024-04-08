@@ -4,16 +4,20 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -22,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.peoplegroup.assignmentapp.AppClass
 import com.peoplegroup.assignmentapp.utilities.Person
+import com.peoplegroup.assignmentapp.utilities.nameBuilder
 
 @Composable
 fun MainScreen(
@@ -69,10 +74,26 @@ fun PersonCardView(person: Person) {
                 horizontal = 16.dp,
                 vertical = 8.dp
             )
+            .shadow(elevation = 8.dp, shape = CardDefaults.shape)
+//            .background(color = Color.White)
     ) {
-        AsyncImage(
-            model = person.picture?.large,
-            contentDescription = ""
-        )
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            AsyncImage(
+                modifier = Modifier
+                    .size(120.dp)
+                    .padding(vertical = 16.dp),
+                model = person.picture?.large,
+                contentDescription = ""
+            )
+
+            person.name?.let {
+                Text(
+                    text = nameBuilder(it)
+                )
+            }
+        }
     }
 }

@@ -14,3 +14,21 @@ fun showToast(text: String) {
         ).show()
     }
 }
+
+fun nameBuilder(name: Name): String {
+    var nameString = ""
+
+    name.title?.let {
+        nameString = nameString.plus(it)
+    }
+
+    name.first?.let {
+        nameString = nameString.plus(" $it")
+    }
+
+    name.last?.let {
+        nameString = nameString.plus(" $it")
+    }
+
+    return "${name.title} ${name.first} ${name.last}"
+}
