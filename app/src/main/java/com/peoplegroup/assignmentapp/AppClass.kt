@@ -20,6 +20,9 @@ class AppClass : Application() {
             return instance!!.applicationContext
         }
 
+        /**
+         *  Live data to monitor network connectivity state.
+         */
         val connectivityState: MutableLiveData<ConnectionState> by lazy {
             MutableLiveData<ConnectionState>(getCurrentConnectivityState())
         }

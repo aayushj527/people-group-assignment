@@ -23,6 +23,12 @@ class PersonRepositoryImpl @Inject constructor(
     private val personDao: PersonDao,
     private val personService: PersonService
 ) : PersonRepository {
+
+    /**
+     *  To fetch person data from remote API.
+     *
+     *  @param limit Number of records to be fetched.
+     */
     override suspend fun getPersonDataFromRemote(
         limit: Int?
     ): Flow<Resource<List<PersonInfo>>> {
@@ -43,6 +49,9 @@ class PersonRepositoryImpl @Inject constructor(
 
             emit(Resource.Success())
 
+            /**
+             *  If data fetched from server is non-null, then it will be stored in local DB.
+             */
             remoteData?.let {
                 insertPersonData(it)
             }
@@ -51,6 +60,9 @@ class PersonRepositoryImpl @Inject constructor(
         }
     }
 
+    /**
+     *  To get person list from local DB as a flow.
+     */
     override fun getPersonDataFromLocal(): Flow<List<PersonInfo>> {
         return flow {
             personDao.getAllPersons().collect { personList ->
@@ -59,11 +71,17 @@ class PersonRepositoryImpl @Inject constructor(
         }
     }
 
+    /**
+     *  To insert new records in person list.
+     */
     override suspend fun insertPersonData(persons: List<PersonEntity>) =
         withContext(Dispatchers.IO) {
             personDao.insertUser(persons)
         }
 
+    /**
+     *  To update status(Accepted or Declined) of persons using their id(primary key).
+     */
     override suspend fun updatePersonStatus(status: Status, id: Int) = withContext(Dispatchers.IO) {
         personDao.updatePersonStatus(status, id)
     }

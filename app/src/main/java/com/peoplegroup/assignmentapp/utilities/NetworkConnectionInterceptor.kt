@@ -6,6 +6,9 @@ import okhttp3.Request
 import okhttp3.Response
 import java.io.IOException
 
+/**
+ *  To verify if network is connected or not while calling an API.
+ */
 class NetworkConnectionInterceptor: Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         if (AppClass.connectivityState.value == ConnectionState.Unavailable) {

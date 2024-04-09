@@ -6,6 +6,9 @@ import com.peoplegroup.assignmentapp.domain.model.PersonInfo
 import com.peoplegroup.assignmentapp.utilities.addressBuilder
 import com.peoplegroup.assignmentapp.utilities.nameBuilder
 
+/**
+ *  To convert PersonEntity to PersonInfo DTO.
+ */
 fun PersonEntity.toPersonInfo(): PersonInfo {
     return PersonInfo(
         id = id,
@@ -16,6 +19,9 @@ fun PersonEntity.toPersonInfo(): PersonInfo {
     )
 }
 
+/**
+ *  To convert Person to PersonEntity DTO.
+ */
 fun Person.toPersonEntity(): PersonEntity {
     return PersonEntity(person = this)
 }

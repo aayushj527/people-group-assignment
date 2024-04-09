@@ -19,13 +19,20 @@ class MainScreenViewModel @Inject constructor(
     val personRepository: PersonRepository
 ) : ViewModel() {
     var state by mutableStateOf(MainScreenState())
+
+    /**
+     *  Person data live data from local DB.
+     */
     val persons = personRepository.getPersonDataFromLocal().asLiveData()
 
     init {
-        getPersonData()
+        getPersonDataFromRemote()
     }
 
-    fun getPersonData() {
+    /**
+     *  To fetch data from remote server.
+     */
+    fun getPersonDataFromRemote() {
         viewModelScope.launch {
             personRepository
                 .getPersonDataFromRemote()
@@ -47,6 +54,10 @@ class MainScreenViewModel @Inject constructor(
         }
     }
 
+    /**
+     *  To decide if API should be re-called or not, when network
+     *  connection is restored.
+     */
     fun shouldRetry(connectionState: ConnectionState): Boolean {
         return connectionState == ConnectionState.Available &&
                 !state.dataSyncedFromApi &&

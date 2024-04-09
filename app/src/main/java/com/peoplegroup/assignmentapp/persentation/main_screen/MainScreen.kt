@@ -41,12 +41,19 @@ fun MainScreen(
     var personList by remember { mutableStateOf(listOf<PersonInfo>()) }
     
     LaunchedEffect(key1 = Unit) {
+        /**
+         *  Observer of network connectivity state to trigger retry when internet
+         *  connection is restored.
+         */
         AppClass.connectivityState.observe(lifecycleOwner) {
             if (mainScreenViewModel.shouldRetry(it)) {
-                mainScreenViewModel.getPersonData()
+                mainScreenViewModel.getPersonDataFromRemote()
             }
         }
 
+        /**
+         *  Observer of person data from DB.
+         */
         mainScreenViewModel.persons.observe(lifecycleOwner) { personEntityList ->
             personList = personEntityList
         }
@@ -88,12 +95,15 @@ fun MainScreen(
                 )
             }
 
+            /**
+             *  "Load more" button to fetch more records.
+             */
             if (personList.isNotEmpty()) {
                 item {
                     Button(
                         modifier = Modifier.padding(vertical = 8.dp),
                         onClick = {
-                            mainScreenViewModel.getPersonData()
+                            mainScreenViewModel.getPersonDataFromRemote()
                         }
                     ) {
                         if (mainScreenViewModel.state.loading) {

@@ -9,6 +9,9 @@ import com.peoplegroup.assignmentapp.AppClass
 
 const val CONNECTIVITY_INTENT_ACTION = "android.net.conn.CONNECTIVITY_CHANGE"
 
+/**
+ *  Broadcast receiver of network connectivity.
+ */
 val networkChangeReceiver: BroadcastReceiver = object : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == CONNECTIVITY_INTENT_ACTION) {
@@ -21,6 +24,9 @@ val networkChangeReceiver: BroadcastReceiver = object : BroadcastReceiver() {
     }
 }
 
+/**
+ *  To get current connectivity state.
+ */
 fun getCurrentConnectivityState(): ConnectionState {
     val connectivityManager =
         AppClass.getContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -43,6 +49,9 @@ fun getCurrentConnectivityState(): ConnectionState {
     }
 }
 
+/**
+ *  To verify if active network has internet access or not.
+ */
 fun internetConnected(networkCapabilities: NetworkCapabilities): Boolean {
     return networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
 }
