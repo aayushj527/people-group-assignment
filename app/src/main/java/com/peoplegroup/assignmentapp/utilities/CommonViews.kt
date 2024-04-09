@@ -26,9 +26,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.peoplegroup.assignmentapp.R
+import com.peoplegroup.assignmentapp.domain.model.PersonInfo
 
 @Composable
-fun PersonCardView(person: Person) {
+fun PersonCardView(
+    person: PersonInfo,
+    accepted: (id: Int) -> Unit,
+    declined: (id: Int) -> Unit
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -46,13 +51,13 @@ fun PersonCardView(person: Person) {
                 modifier = Modifier
                     .size(120.dp)
                     .padding(vertical = 16.dp),
-                model = person.picture?.large,
+                model = person.imageUrl,
                 contentDescription = ""
             )
 
             person.name?.let {
                 Text(
-                    text = nameBuilder(it),
+                    text = person.name,
                     style = TextStyle(
                         fontSize = 20.sp,
                         fontWeight = FontWeight.W500,
@@ -61,14 +66,14 @@ fun PersonCardView(person: Person) {
                 )
             }
 
-            person.location?.let {
+            person.address?.let {
                 Text(
                     modifier = Modifier.padding(
                         top = 16.dp,
                         start = 40.dp,
                         end = 40.dp
                     ),
-                    text = addressBuilder(it),
+                    text = person.address,
                     style = TextStyle(
                         fontSize = 20.sp,
                         fontWeight = FontWeight.W400,
@@ -77,18 +82,31 @@ fun PersonCardView(person: Person) {
                 )
             }
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 16.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                ActionButton(painterResource = R.drawable.ic_decline) {
+            person.status?.let {
+                Text(
+                    modifier = Modifier.padding(vertical = 16.dp),
+                    text = it.name,
+                    style = TextStyle(
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.W500,
+                        textAlign = TextAlign.Center,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                )
+            } ?: run {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 16.dp),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    ActionButton(painterResource = R.drawable.ic_decline) {
+                        declined(person.id)
+                    }
 
-                }
-
-                ActionButton(painterResource = R.drawable.ic_accept) {
-
+                    ActionButton(painterResource = R.drawable.ic_accept) {
+                        accepted(person.id)
+                    }
                 }
             }
         }

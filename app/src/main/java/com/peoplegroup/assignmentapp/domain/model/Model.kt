@@ -1,4 +1,4 @@
-package com.peoplegroup.assignmentapp.utilities
+package com.peoplegroup.assignmentapp.domain.model
 
 data class Person(
     var gender: String? = null,
@@ -76,3 +76,7 @@ data class Picture(
     var medium: String? = null,
     var thumbnail: String? = null
 )
+
+enum class Status {
+    Accepted, Declined
+}

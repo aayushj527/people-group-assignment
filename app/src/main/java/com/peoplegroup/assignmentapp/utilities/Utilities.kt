@@ -4,6 +4,9 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
 import com.peoplegroup.assignmentapp.AppClass
+import com.peoplegroup.assignmentapp.domain.model.Location
+import com.peoplegroup.assignmentapp.domain.model.Name
+import com.peoplegroup.assignmentapp.domain.model.Street
 
 fun showToast(text: String) {
     Handler(Looper.getMainLooper()).post {

@@ -2,8 +2,8 @@ package com.peoplegroup.assignmentapp.di
 
 import androidx.room.Room
 import com.peoplegroup.assignmentapp.AppClass
-import com.peoplegroup.assignmentapp.data.database.DataBase
-import com.peoplegroup.assignmentapp.data.database.PersonDao
+import com.peoplegroup.assignmentapp.data.local.DataBase
+import com.peoplegroup.assignmentapp.data.local.PersonDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

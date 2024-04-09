@@ -6,7 +6,6 @@ import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import com.peoplegroup.assignmentapp.AppClass
-import com.peoplegroup.assignmentapp.R
 
 const val CONNECTIVITY_INTENT_ACTION = "android.net.conn.CONNECTIVITY_CHANGE"
 
@@ -16,9 +15,6 @@ val networkChangeReceiver: BroadcastReceiver = object : BroadcastReceiver() {
             getCurrentConnectivityState().let {
                 if (it != AppClass.connectivityState.value) {
                     AppClass.connectivityState.value = it
-                }
-                if (it == ConnectionState.Unavailable) {
-                    showToast(context.getString(R.string.error_network_disconnected))
                 }
             }
         }
@@ -31,13 +27,13 @@ fun getCurrentConnectivityState(): ConnectionState {
 
     val network = connectivityManager.activeNetwork ?: return ConnectionState.Unavailable
 
-    val actNetwork = connectivityManager.getNetworkCapabilities(network)
+    val networkCapabilities = connectivityManager.getNetworkCapabilities(network)
         ?: return ConnectionState.Unavailable
 
     return when {
-        (actNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
-                actNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) &&
-                internetConnected(connectivityManager) -> {
+        (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
+                networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) &&
+                internetConnected(networkCapabilities) -> {
             ConnectionState.Available
         }
 
@@ -47,11 +43,8 @@ fun getCurrentConnectivityState(): ConnectionState {
     }
 }
 
-fun internetConnected(connectivityManager: ConnectivityManager): Boolean {
-    val activeNetwork = connectivityManager.activeNetwork ?: return false
-    val capabilities = connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
-    return capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
-            capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+fun internetConnected(networkCapabilities: NetworkCapabilities): Boolean {
+    return networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
 }
 
 sealed class ConnectionState {

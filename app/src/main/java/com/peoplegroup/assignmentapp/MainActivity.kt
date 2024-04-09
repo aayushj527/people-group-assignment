@@ -11,8 +11,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.peoplegroup.assignmentapp.data.database.PersonDao
-import com.peoplegroup.assignmentapp.ui.main_screen.MainScreen
+import com.peoplegroup.assignmentapp.data.local.PersonDao
+import com.peoplegroup.assignmentapp.persentation.main_screen.MainScreen
 import com.peoplegroup.assignmentapp.ui.theme.PeopleGroupAssignmentAppTheme
 import com.peoplegroup.assignmentapp.utilities.CONNECTIVITY_INTENT_ACTION
 import com.peoplegroup.assignmentapp.utilities.networkChangeReceiver
