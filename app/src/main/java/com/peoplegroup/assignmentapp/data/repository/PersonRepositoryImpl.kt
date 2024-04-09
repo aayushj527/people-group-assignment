@@ -41,6 +41,8 @@ class PersonRepositoryImpl @Inject constructor(
                 null
             }
 
+            emit(Resource.Success())
+
             remoteData?.let {
                 insertPersonData(it)
             }

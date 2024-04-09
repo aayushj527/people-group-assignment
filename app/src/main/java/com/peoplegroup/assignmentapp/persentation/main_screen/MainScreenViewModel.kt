@@ -35,9 +35,7 @@ class MainScreenViewModel @Inject constructor(
                             state = state.copy(loading = result.isLoading)
                         }
                         is Resource.Success -> {
-                            result.data?.let {
-                                state = state.copy(dataSyncedFromApi = true)
-                            }
+                            state = state.copy(dataSyncedFromApi = true)
                         }
                         is Resource.Error -> {
                             result.message?.let {
